@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display None Example</title>
+    <style>
+        /* Internal CSS */
+        .hidden {
+            display: none;
+        }
+        
+        .visible {
+            display: block;
+            padding: 10px;
+            background-color: lightgreen;
+            border: 1px solid green;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Display: None Example</h1>
+    
+    <div class="visible">
+        This div is visible.
+    </div>
+    
+    <div class="hidden" id="hidden">
+        This div is hidden.
+    </div>
+    
+    <button onclick="toggleVisibility()">Toggle Visibility</button>
+    
+    <script>
+        function toggleVisibility() {
+            var hiddenDiv = document.querySelector('.hidden');
+            if (hiddenDiv.style.display === 'none') {
+                hiddenDiv.style.display = 'block';
+            } else {
+                hiddenDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
