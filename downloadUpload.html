@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Buttons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px;
+        }
+
+        /* Download button */
+        .download-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px #388E3C, 0 6px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .download-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px #388E3C, 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Upload button */
+        .upload-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #2196F3;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px #1976D2, 0 6px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .upload-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px #1976D2, 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-input {
+            display: none;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #FF5722;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px #E64A19, 0 6px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px #E64A19, 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 3D Alert box */
+        .alert-box {
+            display: none;
+            padding: 20px;
+            background-color: #FF5722;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transform: translateZ(0);
+            perspective: 1000px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .alert-box.show {
+            display: block;
+            opacity: 1;
+            transform: rotateX(20deg);
+        }
+    </style>
+</head>
+<body>
+
+    <form id="uploadForm">
+        <div class="button-container">
+            <a href="File.pdf" download class="download-btn">Download</a>
+        </div>
+
+        <div class="button-container">
+            <label class="upload-btn">
+                Upload
+                <input type="file" id="uploadInput" class="upload-input" required>
+            </label>
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="submit-btn">Submit</button>
+        </div>
+    </form>
+
+    <div class="alert-box" id="alertBox">
+        Please upload a file before submitting!
+    </div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        const uploadInput = document.getElementById('uploadInput');
+        const alertBox = document.getElementById('alertBox');
+
+        form.addEventListener('submit', function(event) {
+            if (!uploadInput.files.length) {
+                event.preventDefault(); // Prevent form submission if no file is selected
+                alertBox.classList.add('show'); // Show the 3D alert box
+                setTimeout(() => alertBox.classList.remove('show'), 3000); // Hide the alert after 3 seconds
+            }
+        });
+    </script>
+
+</body>
+</html>
