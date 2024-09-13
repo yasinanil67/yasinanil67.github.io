@@ -102,19 +102,40 @@
             opacity: 1;
             transform: rotateX(20deg);
         }
+
+        /* Success box */
+        .success-box {
+            display: none;
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transform: translateZ(0);
+            perspective: 1000px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .success-box.show {
+            display: block;
+            opacity: 1;
+            transform: rotateX(20deg);
+        }
     </style>
 </head>
 <body>
 
     <form id="uploadForm">
         <div class="button-container">
-            <a href="File.pdf" download class="download-btn">Download</a>
+            <a href="QAProgram.png" download class="download-btn">Download</a>
         </div>
 
         <div class="button-container">
             <label class="upload-btn">
                 Upload
-                <input type="file" id="uploadInput" class="upload-input" required>
+                <input type="file" id="uploadInput" class="upload-input" accept=".pdf" required>
             </label>
         </div>
 
@@ -124,19 +145,34 @@
     </form>
 
     <div class="alert-box" id="alertBox">
-        Please upload a file before submitting!
+        Please upload a PDF file!
+    </div>
+
+    <div class="success-box" id="successBox">
+        File uploaded successfully!
     </div>
 
     <script>
         const form = document.getElementById('uploadForm');
         const uploadInput = document.getElementById('uploadInput');
         const alertBox = document.getElementById('alertBox');
+        const successBox = document.getElementById('successBox');
 
         form.addEventListener('submit', function(event) {
-            if (!uploadInput.files.length) {
-                event.preventDefault(); // Prevent form submission if no file is selected
-                alertBox.classList.add('show'); // Show the 3D alert box
-                setTimeout(() => alertBox.classList.remove('show'), 3000); // Hide the alert after 3 seconds
+            const file = uploadInput.files[0];
+
+            // PDF file check
+            if (!file || file.type !== "application/pdf") {
+                event.preventDefault(); // Prevent non-PDF files from being uploaded
+                alertBox.classList.add('show'); // Show warning message
+                setTimeout(() => alertBox.classList.remove('show'), 3000); // Hide warning after 3 seconds
+            } else {
+                event.preventDefault(); // Delay form submission
+                successBox.classList.add('show'); // Show success message
+                setTimeout(() => {
+                    successBox.classList.remove('show'); // Hide success message after 5 seconds
+                    form.submit(); // Submit the form
+                }, 5000); // Show success for 5 seconds
             }
         });
     </script>
