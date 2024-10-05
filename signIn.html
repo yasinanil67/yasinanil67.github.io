@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Sign-In Page</title>
+    <title>3D Sign-In Page with Eye Icon Inside Input</title>
     <style>
         /* Basic reset */
         * {
@@ -37,8 +37,31 @@
             text-align: center;
             margin-bottom: 20px;
             transform: rotateY(10deg);
+            display: inline-block;
         }
 
+        .hint {
+            display: inline-block;
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 5px;
+            color: blue;
+            vertical-align: middle;
+            transform: rotateY(10deg);
+        }
+
+        .hint:hover {
+            text-decoration: underline;
+        }
+
+        .hint-text {
+            display: none;
+            font-size: 12px;
+            color: #333;
+            margin-top: 5px;
+        }
+
+        /* Styling for input fields */
         .login-container input[type="text"],
         .login-container input[type="password"] {
             width: 100%;
@@ -47,6 +70,26 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             transform: rotateY(10deg);
+            position: relative;
+        }
+
+        /* Eye icon styling inside the input */
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-container input[type="password"] {
+            padding-right: 40px; /* Add padding for the icon */
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #888;
         }
 
         .login-container input[type="submit"] {
@@ -93,11 +136,21 @@
 </head>
 <body>
     <div class="login-container" id="loginForm">
-        <h2>Sign In</h2>
+        <div style="text-align: center;">
+            <h2>Sign In</h2>
+            <span class="hint" onclick="showHint()">&#x3f;</span>
+        </div>
         <form onsubmit="return validateLogin()">
             <input type="text" id="username" placeholder="Username" required>
-            <input type="password" id="password" placeholder="Password" required>
+            
+            <!-- Password field with eye icon inside -->
+            <div class="password-container">
+                <input type="password" id="password" placeholder="Password" required>
+                <span class="eye-icon" onclick="togglePasswordVisibility()">&#x1F441;</span>
+            </div>
+
             <input type="submit" value="Sign In">
+            <div class="hint-text" id="hintText">Username: admin, Password: 123</div>
         </form>
     </div>
 
@@ -142,6 +195,27 @@
             } else {
                 alert("Incorrect username or password");
                 return false;
+            }
+        }
+
+        function showHint() {
+            var hintText = document.getElementById("hintText");
+            if (hintText.style.display === "none" || hintText.style.display === "") {
+                hintText.style.display = "block";
+            } else {
+                hintText.style.display = "none";
+            }
+        }
+
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.querySelector(".eye-icon");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.textContent = "🙈"; // Change icon to closed eye
+            } else {
+                passwordField.type = "password";
+                eyeIcon.textContent = "👁"; // Change icon back to open eye
             }
         }
     </script>
